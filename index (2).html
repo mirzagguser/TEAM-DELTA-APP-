@@ -1,0 +1,1597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TEAM DELTA </title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #6200ea;
+            --primary-light: #9e47ff;
+            --primary-dark: #0400b7;
+            --secondary-color: #03dac6;
+            --secondary-light: #66fff9;
+            --secondary-dark: #00a895;
+            --background-light: #ffffff;
+            --background-dark: #121212;
+            --surface-light: #ffffff;
+            --surface-dark: #1e1e1e;
+            --error-color: #b00020;
+            --on-primary: #ffffff;
+            --on-secondary: #000000;
+            --on-background-light: #000000;
+            --on-background-dark: #ffffff;
+            --on-surface-light: #000000;
+            --on-surface-dark: #ffffff;
+            --text-primary: rgba(0, 0, 0, 0.87);
+            --text-secondary: rgba(0, 0, 0, 0.6);
+            --text-hint: rgba(0, 0, 0, 0.38);
+            --text-primary-dark: rgba(255, 255, 255, 0.87);
+            --text-secondary-dark: rgba(255, 255, 255, 0.6);
+            --text-hint-dark: rgba(255, 255, 255, 0.38);
+            --divider-light: rgba(0, 0, 0, 0.12);
+            --divider-dark: rgba(255, 255, 255, 0.12);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', sans-serif;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        body {
+            background-color: var(--background-light);
+            color: var(--text-primary);
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        body.dark-mode {
+            background-color: var(--background-dark);
+            color: var(--text-primary-dark);
+        }
+
+        .app-container {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Auth Pages */
+        .auth-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            padding: 20px;
+        }
+
+        .auth-card {
+            background-color: var(--surface-light);
+            border-radius: 12px;
+            padding: 24px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .dark-mode .auth-card {
+            background-color: var(--surface-dark);
+        }
+
+        .auth-title {
+            font-size: 24px;
+            margin-bottom: 24px;
+            text-align: center;
+            color: var(--primary-color);
+        }
+
+        .dark-mode .auth-title {
+            color: var(--secondary-color);
+        }
+
+        .auth-form {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .auth-footer {
+            margin-top: 16px;
+            text-align: center;
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .dark-mode .auth-footer {
+            color: var(--text-secondary-dark);
+        }
+
+        .auth-link {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .dark-mode .auth-link {
+            color: var(--secondary-color);
+        }
+
+        /* Splash Screen */
+        .splash-screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            animation: fadeOut 0.5s 2s forwards;
+        }
+
+        .logo {
+            width: 120px;
+            height: 120px;
+            background-color: white;
+            border-radius: 24px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            animation: pulse 1.5s infinite;
+        }
+
+        .logo i {
+            font-size: 60px;
+            color: var(--primary-color);
+        }
+
+        .app-name {
+            color: white;
+            font-size: 24px;
+            font-weight: 500;
+            margin-top: 20px;
+        }
+
+        @keyframes fadeOut {
+            to {
+                opacity: 0;
+                visibility: hidden;
+            }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        /* App Bar */
+        .app-bar {
+            background-color: var(--primary-color);
+            color: var(--on-primary);
+            padding: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            z-index: 10;
+        }
+
+        .dark-mode .app-bar {
+            background-color: var(--primary-dark);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .app-title {
+            font-size: 20px;
+            font-weight: 500;
+        }
+
+        .app-bar-actions {
+            display: flex;
+            gap: 16px;
+        }
+
+        /* Bottom Navigation */
+        .bottom-nav {
+            background-color: var(--surface-light);
+            display: flex;
+            justify-content: space-around;
+            padding: 8px 0;
+            box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+            z-index: 10;
+        }
+
+        .dark-mode .bottom-nav {
+            background-color: var(--surface-dark);
+            box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 12px;
+            padding: 8px;
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        .dark-mode .nav-item {
+            color: var(--text-secondary-dark);
+        }
+
+        .nav-item.active {
+            color: var(--primary-color);
+        }
+
+        .dark-mode .nav-item.active {
+            color: var(--secondary-color);
+        }
+
+        .nav-item i {
+            font-size: 24px;
+            margin-bottom: 4px;
+        }
+
+        .nav-item.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 6px;
+            height: 6px;
+            background-color: var(--primary-color);
+            border-radius: 50%;
+        }
+
+        .dark-mode .nav-item.active::after {
+            background-color: var(--secondary-color);
+        }
+
+        /* Page Content */
+        .page-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px;
+            background-color: var(--surface-light);
+        }
+
+        .dark-mode .page-content {
+            background-color: var(--surface-dark);
+        }
+
+        /* Page Transitions */
+        .page {
+            display: none;
+            height: 100%;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        /* Home Page */
+        .welcome-card {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: var(--on-primary);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+        }
+
+        .welcome-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .welcome-title {
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+
+        .welcome-subtitle {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+
+        .feature-card {
+            background-color: var(--surface-light);
+            border-radius: 8px;
+            padding: 16px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+        }
+
+        .dark-mode .feature-card {
+            background-color: var(--surface-dark);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .feature-card i {
+            font-size: 36px;
+            color: var(--primary-color);
+            margin-bottom: 8px;
+        }
+
+        .dark-mode .feature-card i {
+            color: var(--secondary-color);
+        }
+
+        .feature-title {
+            font-size: 16px;
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+
+        .feature-desc {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .dark-mode .feature-desc {
+            color: var(--text-secondary-dark);
+        }
+
+        /* Settings Page */
+        .settings-list {
+            list-style: none;
+        }
+
+        .settings-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 0;
+            border-bottom: 1px solid var(--divider-light);
+        }
+
+        .dark-mode .settings-item {
+            border-bottom: 1px solid var(--divider-dark);
+        }
+
+        .settings-item:last-child {
+            border-bottom: none;
+        }
+
+        .settings-item-left {
+            display: flex;
+            align-items: center;
+        }
+
+        .settings-item i {
+            margin-right: 16px;
+            color: var(--primary-color);
+        }
+
+        .dark-mode .settings-item i {
+            color: var(--secondary-color);
+        }
+
+        .settings-item-title {
+            font-weight: 500;
+        }
+
+        .settings-item-desc {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .dark-mode .settings-item-desc {
+            color: var(--text-secondary-dark);
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 24px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: var(--primary-color);
+        }
+
+        .dark-mode input:checked + .slider {
+            background-color: var(--secondary-color);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+
+        /* Profile Page */
+        .profile-header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .profile-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 16px;
+            color: var(--on-primary);
+            font-size: 40px;
+            font-weight: bold;
+            transition: transform 0.3s;
+        }
+
+        .dark-mode .profile-avatar {
+            background-color: var(--secondary-color);
+            color: var(--on-secondary);
+        }
+
+        .profile-avatar:hover {
+            transform: rotate(360deg);
+        }
+
+        .profile-name {
+            font-size: 20px;
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+
+        .profile-email {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .dark-mode .profile-email {
+            color: var(--text-secondary-dark);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-bottom: 24px;
+        }
+
+        .stat-card {
+            background-color: var(--surface-light);
+            border-radius: 8px;
+            padding: 12px;
+            text-align: center;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .dark-mode .stat-card {
+            background-color: var(--surface-dark);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+        }
+
+        .stat-value {
+            font-size: 18px;
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .dark-mode .stat-label {
+            color: var(--text-secondary-dark);
+        }
+
+        .profile-action-card {
+            background-color: var(--surface-light);
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 16px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: transform 0.2s;
+            cursor: pointer;
+        }
+
+        .dark-mode .profile-action-card {
+            background-color: var(--surface-dark);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .profile-action-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .profile-action-card i {
+            font-size: 36px;
+            color: var(--primary-color);
+            margin-bottom: 8px;
+        }
+
+        .dark-mode .profile-action-card i {
+            color: var(--secondary-color);
+        }
+
+        .profile-action-title {
+            font-size: 16px;
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+
+        /* Notifications Page */
+        .notification-item {
+            display: flex;
+            padding: 16px 0;
+            border-bottom: 1px solid var(--divider-light);
+            transition: transform 0.2s;
+        }
+
+        .dark-mode .notification-item {
+            border-bottom: 1px solid var(--divider-dark);
+        }
+
+        .notification-item:last-child {
+            border-bottom: none;
+        }
+
+        .notification-item:hover {
+            transform: translateX(5px);
+        }
+
+        .notification-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #e0e0e0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 16px;
+            color: var(--primary-color);
+        }
+
+        .dark-mode .notification-icon {
+            background-color: #333;
+        }
+
+        .notification-content {
+            flex: 1;
+        }
+
+        .notification-title {
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+
+        .notification-message {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 4px;
+        }
+
+        .dark-mode .notification-message {
+            color: var(--text-secondary-dark);
+        }
+
+        .notification-time {
+            font-size: 12px;
+            color: var(--text-hint);
+        }
+
+        .dark-mode .notification-time {
+            color: var(--text-hint-dark);
+        }
+
+        /* Edit Profile Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal {
+            background-color: var(--surface-light);
+            border-radius: 12px;
+            width: 90%;
+            max-width: 400px;
+            padding: 24px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            transform: translateY(20px);
+            transition: transform 0.3s;
+        }
+
+        .dark-mode .modal {
+            background-color: var(--surface-dark);
+        }
+
+        .modal-overlay.active .modal {
+            transform: translateY(0);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-title {
+            font-size: 20px;
+            font-weight: 500;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--text-secondary);
+        }
+
+        .dark-mode .close-btn {
+            color: var(--text-secondary-dark);
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .dark-mode .form-label {
+            color: var(--text-secondary-dark);
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--divider-light);
+            border-radius: 8px;
+            font-size: 16px;
+            background-color: var(--surface-light);
+            color: var(--text-primary);
+        }
+
+        .dark-mode .form-input {
+            border-color: var(--divider-dark);
+            background-color: var(--surface-dark);
+            color: var(--text-primary-dark);
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .dark-mode .form-input:focus {
+            border-color: var(--secondary-color);
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            margin-top: 24px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s, transform 0.2s;
+        }
+
+        .btn:hover {
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background-color: var(--surface-light);
+            color: var(--primary-color);
+            border: 1px solid var(--divider-light);
+        }
+
+        .dark-mode .btn-secondary {
+            background-color: var(--surface-dark);
+            color: var(--secondary-color);
+            border-color: var(--divider-dark);
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: var(--on-primary);
+            border: none;
+        }
+
+        .dark-mode .btn-primary {
+            background-color: var(--secondary-color);
+            color: var(--on-secondary);
+        }
+
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--surface-dark);
+            color: var(--text-primary-dark);
+            padding: 12px 24px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            z-index: 50;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+        }
+
+        .toast.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Loading Spinner */
+        .spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: var(--on-primary);
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Error Messages */
+        .error-message {
+            color: var(--error-color);
+            font-size: 12px;
+            margin-top: 4px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Splash Screen -->
+    <div class="splash-screen">
+        <div class="logo">
+            <i class="material-icons">android</i>
+        </div>
+        <div class="app-name">TEAM DELTA APP</div>
+    </div>
+
+    <!-- Auth Pages -->
+    <div class="page active" id="login-page">
+        <div class="auth-container">
+            <div class="auth-card">
+                <h2 class="auth-title">Login</h2>
+                <form class="auth-form" id="login-form">
+                    <div class="form-group">
+                        <label for="login-email" class="form-label">Email</label>
+                        <input type="email" id="login-email" class="form-input" required>
+                        <div class="error-message" id="login-email-error"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="login-password" class="form-label">Password</label>
+                        <input type="password" id="login-password" class="form-input" required>
+                        <div class="error-message" id="login-password-error"></div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Login</button>
+                </form>
+                <div class="auth-footer">
+                    Don't have an account? <a href="#" class="auth-link" id="show-register">Register</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="page" id="register-page">
+        <div class="auth-container">
+            <div class="auth-card">
+                <h2 class="auth-title">Register</h2>
+                <form class="auth-form" id="register-form">
+                    <div class="form-group">
+                        <label for="register-name" class="form-label">Full Name</label>
+                        <input type="text" id="register-name" class="form-input" required>
+                        <div class="error-message" id="register-name-error"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="register-email" class="form-label">Email</label>
+                        <input type="email" id="register-email" class="form-input" required>
+                        <div class="error-message" id="register-email-error"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="register-password" class="form-label">Password</label>
+                        <input type="password" id="register-password" class="form-input" required>
+                        <div class="error-message" id="register-password-error"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="register-confirm-password" class="form-label">Confirm Password</label>
+                        <input type="password" id="register-confirm-password" class="form-input" required>
+                        <div class="error-message" id="register-confirm-password-error"></div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Register</button>
+                </form>
+                <div class="auth-footer">
+                    Already have an account? <a href="#" class="auth-link" id="show-login">Login</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main App Container -->
+    <div class="app-container" id="app-container" style="display: none;">
+        <!-- App Bar -->
+        <div class="app-bar">
+            <div class="app-title" id="page-title">Home</div>
+            <div class="app-bar-actions">
+                <i class="material-icons">search</i>
+                <i class="material-icons">more_vert</i>
+            </div>
+        </div>
+
+        <!-- Page Content -->
+        <div class="page-content" id="page-content">
+            <!-- Home Page -->
+            <div class="page active" id="home-page">
+                <div class="welcome-card">
+                    <div class="welcome-title">Welcome back!</div>
+                    <div class="welcome-subtitle">You have 3 jobs left</div>
+                </div>
+
+                <div class="features-grid">
+                    <div class="feature-card" id="settings-card">
+                        <i class="material-icons">settings</i>
+                        <div class="feature-title">Settings</div>
+                        <div class="feature-desc">Customize your app experience</div>
+                    </div>
+                    <div class="feature-card" id="profile-card">
+                        <i class="material-icons">account_circle</i>
+                        <div class="feature-title">Profile</div>
+                        <div class="feature-desc">View and edit your profile</div>
+                    </div>
+                    <div class="feature-card" id="notifications-card">
+                        <i class="material-icons">notifications</i>
+                        <div class="feature-title">Alerts</div>
+                        <div class="feature-desc">Check your notifications</div>
+                    </div>
+                    <div class="feature-card">
+                        <i class="material-icons">help</i>
+                        <div class="feature-title">Help</div>
+                        <div class="feature-desc">Get support and FAQ</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Settings Page -->
+            <div class="page" id="settings-page">
+                <ul class="settings-list">
+                    <li class="settings-item">
+                        <div class="settings-item-left">
+                            <i class="material-icons">notifications</i>
+                            <div>
+                                <div class="settings-item-title">Notifications</div>
+                                <div class="settings-item-desc">Enable or disable notifications</div>
+                            </div>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" id="notifications-toggle" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </li>
+                    <li class="settings-item">
+                        <div class="settings-item-left">
+                            <i class="material-icons">dark_mode</i>
+                            <div>
+                                <div class="settings-item-title">Dark Mode</div>
+                                <div class="settings-item-desc">Switch to dark theme</div>
+                            </div>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" id="dark-mode-toggle">
+                            <span class="slider"></span>
+                        </label>
+                    </li>
+                    <li class="settings-item">
+                        <div class="settings-item-left">
+                            <i class="material-icons">security</i>
+                            <div>
+                                <div class="settings-item-title">Security</div>
+                                <div class="settings-item-desc">Change password and security settings</div>
+                            </div>
+                        </div>
+                        <i class="material-icons">chevron_right</i>
+                    </li>
+                    <li class="settings-item">
+                        <div class="settings-item-left">
+                            <i class="material-icons">language</i>
+                            <div>
+                                <div class="settings-item-title">Language</div>
+                                <div class="settings-item-desc">English (United States)</div>
+                            </div>
+                        </div>
+                        <i class="material-icons">chevron_right</i>
+                    </li>
+                    <li class="settings-item">
+                        <div class="settings-item-left">
+                            <i class="material-icons">help</i>
+                            <div>
+                                <div class="settings-item-title">Help & Support</div>
+                                <div class="settings-item-desc">FAQs and contact support</div>
+                            </div>
+                        </div>
+                        <i class="material-icons">chevron_right</i>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Profile Page -->
+            <div class="page" id="profile-page">
+                <div class="profile-header">
+                    <div class="profile-avatar" id="profile-avatar">JD</div>
+                    <div class="profile-name" id="profile-name">John Doe</div>
+                    <div class="profile-email" id="profile-email">john.doe@example.com</div>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-value">124</div>
+                        <div class="stat-label">Posts</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">1.2K</div>
+                        <div class="stat-label">Followers</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">356</div>
+                        <div class="stat-label">Following</div>
+                    </div>
+                </div>
+
+                <div class="profile-action-card" id="edit-profile-btn">
+                    <i class="material-icons">edit</i>
+                    <div class="profile-action-title">Edit Profile</div>
+                    <div class="feature-desc">Update your personal information</div>
+                </div>
+
+                <div class="profile-action-card" id="logout-btn">
+                    <i class="material-icons">logout</i>
+                    <div class="profile-action-title">Logout</div>
+                    <div class="feature-desc">Sign out of your account</div>
+                </div>
+            </div>
+
+            <!-- Notifications Page -->
+            <div class="page" id="notifications-page">
+                <div class="notification-item">
+                    <div class="notification-icon">
+                        <i class="material-icons">notifications</i>
+                    </div>
+                    <div class="notification-content">
+                        <div class="notification-title">New Message</div>
+                        <div class="notification-message">You have received a new message from Sarah</div>
+                        <div class="notification-time">10 minutes ago</div>
+                    </div>
+                </div>
+
+                <div class="notification-item">
+                    <div class="notification-icon">
+                        <i class="material-icons">event</i>
+                    </div>
+                    <div class="notification-content">
+                        <div class="notification-title">Event Reminder</div>
+                        <div class="notification-message">Team meeting starts in 30 minutes</div>
+                        <div class="notification-time">1 hour ago</div>
+                    </div>
+                </div>
+
+                <div class="notification-item">
+                    <div class="notification-icon">
+                        <i class="material-icons">update</i>
+                    </div>
+                    <div class="notification-content">
+                        <div class="notification-title">App Update</div>
+                        <div class="notification-message">Version 2.3.0 is available</div>
+                        <div class="notification-time">2 hours ago</div>
+                    </div>
+                </div>
+
+                <div class="notification-item">
+                    <div class="notification-icon">
+                        <i class="material-icons">local_offer</i>
+                    </div>
+                    <div class="notification-content">
+                        <div class="notification-title">Special Offer</div>
+                        <div class="notification-message">Get 20% off on your next purchase</div>
+                        <div class="notification-time">5 hours ago</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="#" class="nav-item active" data-page="home-page" data-title="Home">
+                <i class="material-icons">home</i>
+                <span>Home</span>
+            </a>
+            <a href="#" class="nav-item" data-page="notifications-page" data-title="Notifications">
+                <i class="material-icons">notifications</i>
+                <span>Alerts</span>
+            </a>
+            <a href="#" class="nav-item" data-page="profile-page" data-title="Profile">
+                <i class="material-icons">account_circle</i>
+                <span>Profile</span>
+            </a>
+            <a href="#" class="nav-item" data-page="settings-page" data-title="Settings">
+                <i class="material-icons">settings</i>
+                <span>Settings</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Edit Profile Modal -->
+    <div class="modal-overlay" id="edit-profile-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <div class="modal-title">Edit Profile</div>
+                <button class="close-btn" id="close-modal-btn">&times;</button>
+            </div>
+            <form id="profile-form">
+                <div class="form-group">
+                    <label for="name-input" class="form-label">Full Name</label>
+                    <input type="text" id="name-input" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label for="email-input" class="form-label">Email</label>
+                    <input type="email" id="email-input" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label for="bio-input" class="form-label">Bio</label>
+                    <textarea id="bio-input" class="form-input" rows="3"></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" id="cancel-btn">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">Profile updated successfully!</div>
+
+    <script>
+        // DOM Elements
+        const splashScreen = document.querySelector('.splash-screen');
+        const loginPage = document.getElementById('login-page');
+        const registerPage = document.getElementById('register-page');
+        const appContainer = document.getElementById('app-container');
+        const navItems = document.querySelectorAll('.nav-item');
+        const pages = document.querySelectorAll('.page');
+        const pageTitle = document.getElementById('page-title');
+        const darkModeToggle = document.getElementById('dark-mode-toggle');
+        const notificationsToggle = document.getElementById('notifications-toggle');
+        const editProfileBtn = document.getElementById('edit-profile-btn');
+        const logoutBtn = document.getElementById('logout-btn');
+        const editProfileModal = document.getElementById('edit-profile-modal');
+        const closeModalBtn = document.getElementById('close-modal-btn');
+        const cancelBtn = document.getElementById('cancel-btn');
+        const profileForm = document.getElementById('profile-form');
+        const nameInput = document.getElementById('name-input');
+        const emailInput = document.getElementById('email-input');
+        const bioInput = document.getElementById('bio-input');
+        const profileName = document.getElementById('profile-name');
+        const profileEmail = document.getElementById('profile-email');
+        const profileAvatar = document.getElementById('profile-avatar');
+        const toast = document.getElementById('toast');
+        const settingsCard = document.getElementById('settings-card');
+        const profileCard = document.getElementById('profile-card');
+        const notificationsCard = document.getElementById('notifications-card');
+        const loginForm = document.getElementById('login-form');
+        const registerForm = document.getElementById('register-form');
+        const showRegisterLink = document.getElementById('show-register');
+        const showLoginLink = document.getElementById('show-login');
+
+        // Data storage
+        let users = [];
+        let currentUser = null;
+
+        // Initialize app
+        function initApp() {
+            // Load saved data
+            loadData();
+
+            // Set up event listeners
+            setupEventListeners();
+
+            // Hide splash screen after animation
+            setTimeout(() => {
+                splashScreen.style.display = 'none';
+
+                // Check if user is already logged in
+                const loggedInUser = localStorage.getItem('loggedInUser');
+                if (loggedInUser) {
+                    currentUser = JSON.parse(loggedInUser);
+                    showApp();
+                } else {
+                    showLogin();
+                }
+            }, 2500);
+        }
+
+        // Load data from localStorage
+        function loadData() {
+            const savedUsers = localStorage.getItem('users');
+            if (savedUsers) {
+                users = JSON.parse(savedUsers);
+            } else {
+                // Default admin user
+                users = [
+                    {
+                        id: 1,
+                        name: 'Admin',
+                        email: 'admin@example.com',
+                        password: 'admin123',
+                        stats: {
+                            posts: 124,
+                            followers: 1200,
+                            following: 356
+                        }
+                    }
+                ];
+                saveUsers();
+            }
+        }
+
+        // Save users to localStorage
+        function saveUsers() {
+            localStorage.setItem('users', JSON.stringify(users));
+        }
+
+        // Set up event listeners
+        function setupEventListeners() {
+            // Auth navigation
+            showRegisterLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                showRegister();
+            });
+
+            showLoginLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                showLogin();
+            });
+
+            // Auth forms
+            loginForm.addEventListener('submit', handleLogin);
+            registerForm.addEventListener('submit', handleRegister);
+
+            // Main app navigation
+            navItems.forEach(item => {
+                item.addEventListener('click', handleNavClick);
+            });
+
+            // Feature cards on home page
+            settingsCard.addEventListener('click', () => navigateToPage('settings-page', 'Settings'));
+            profileCard.addEventListener('click', () => navigateToPage('profile-page', 'Profile'));
+            notificationsCard.addEventListener('click', () => navigateToPage('notifications-page', 'Notifications'));
+
+            // Dark mode toggle
+            darkModeToggle.addEventListener('change', toggleDarkMode);
+
+            // Notifications toggle
+            notificationsToggle.addEventListener('change', toggleNotifications);
+
+            // Profile actions
+            editProfileBtn.addEventListener('click', openEditProfileModal);
+            logoutBtn.addEventListener('click', handleLogout);
+
+            // Modal actions
+            closeModalBtn.addEventListener('click', closeEditProfileModal);
+            cancelBtn.addEventListener('click', closeEditProfileModal);
+
+            // Form submission
+            profileForm.addEventListener('submit', handleProfileSubmit);
+        }
+
+        // Show login page
+        function showLogin() {
+            loginPage.classList.add('active');
+            registerPage.classList.remove('active');
+        }
+
+        // Show register page
+        function showRegister() {
+            registerPage.classList.add('active');
+            loginPage.classList.remove('active');
+        }
+
+        // Show main app
+        function showApp() {
+            appContainer.style.display = 'flex';
+            loginPage.classList.remove('active');
+            registerPage.classList.remove('active');
+
+            // Update profile with current user data
+            updateProfile();
+        }
+
+        // Hide main app
+        function hideApp() {
+            appContainer.style.display = 'none';
+        }
+
+        // Update profile with current user data
+        function updateProfile() {
+            if (currentUser) {
+                profileName.textContent = currentUser.name;
+                profileEmail.textContent = currentUser.email;
+                profileAvatar.textContent = getInitials(currentUser.name);
+
+                // Update stats if they exist
+                if (currentUser.stats) {
+                    document.querySelector('.stat-value:nth-child(1)').textContent = currentUser.stats.posts || 0;
+                    document.querySelector('.stat-value:nth-child(2)').textContent = currentUser.stats.followers || 0;
+                    document.querySelector('.stat-value:nth-child(3)').textContent = currentUser.stats.following || 0;
+                }
+            }
+        }
+
+        // Handle login
+        function handleLogin(e) {
+            e.preventDefault();
+
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+
+            // Reset errors
+            document.getElementById('login-email-error').style.display = 'none';
+            document.getElementById('login-password-error').style.display = 'none';
+
+            // Validate
+            let isValid = true;
+
+            if (!email) {
+                document.getElementById('login-email-error').textContent = 'Email is required';
+                document.getElementById('login-email-error').style.display = 'block';
+                isValid = false;
+            }
+
+            if (!password) {
+                document.getElementById('login-password-error').textContent = 'Password is required';
+                document.getElementById('login-password-error').style.display = 'block';
+                isValid = false;
+            }
+
+            if (!isValid) return;
+
+            // Find user
+            const user = users.find(u => u.email === email && u.password === password);
+
+            if (user) {
+                currentUser = user;
+                localStorage.setItem('loggedInUser', JSON.stringify(currentUser));
+                showApp();
+                showToast('Login successful!');
+            } else {
+                document.getElementById('login-password-error').textContent = 'Invalid email or password';
+                document.getElementById('login-password-error').style.display = 'block';
+            }
+        }
+
+        // Handle register
+        function handleRegister(e) {
+            e.preventDefault();
+
+            const name = document.getElementById('register-name').value;
+            const email = document.getElementById('register-email').value;
+            const password = document.getElementById('register-password').value;
+            const confirmPassword = document.getElementById('register-confirm-password').value;
+
+            // Reset errors
+            document.getElementById('register-name-error').style.display = 'none';
+            document.getElementById('register-email-error').style.display = 'none';
+            document.getElementById('register-password-error').style.display = 'none';
+            document.getElementById('register-confirm-password-error').style.display = 'none';
+
+            // Validate
+            let isValid = true;
+
+            if (!name) {
+                document.getElementById('register-name-error').textContent = 'Name is required';
+                document.getElementById('register-name-error').style.display = 'block';
+                isValid = false;
+            }
+
+            if (!email) {
+                document.getElementById('register-email-error').textContent = 'Email is required';
+                document.getElementById('register-email-error').style.display = 'block';
+                isValid = false;
+            } else if (!validateEmail(email)) {
+                document.getElementById('register-email-error').textContent = 'Invalid email format';
+                document.getElementById('register-email-error').style.display = 'block';
+                isValid = false;
+            } else if (users.some(u => u.email === email)) {
+                document.getElementById('register-email-error').textContent = 'Email already exists';
+                document.getElementById('register-email-error').style.display = 'block';
+                isValid = false;
+            }
+
+            if (!password) {
+                document.getElementById('register-password-error').textContent = 'Password is required';
+                document.getElementById('register-password-error').style.display = 'block';
+                isValid = false;
+            } else if (password.length < 6) {
+                document.getElementById('register-password-error').textContent = 'Password must be at least 6 characters';
+                document.getElementById('register-password-error').style.display = 'block';
+                isValid = false;
+            }
+
+            if (password !== confirmPassword) {
+                document.getElementById('register-confirm-password-error').textContent = 'Passwords do not match';
+                document.getElementById('register-confirm-password-error').style.display = 'block';
+                isValid = false;
+            }
+
+            if (!isValid) return;
+
+            // Create new user
+            const newUser = {
+                id: users.length > 0 ? Math.max(...users.map(u => u.id)) + 1 : 1,
+                name: name,
+                email: email,
+                password: password,
+                stats: {
+                    posts: 0,
+                    followers: 0,
+                    following: 0
+                }
+            };
+
+            users.push(newUser);
+            saveUsers();
+
+            currentUser = newUser;
+            localStorage.setItem('loggedInUser', JSON.stringify(currentUser));
+
+            showApp();
+            showToast('Registration successful!');
+        }
+
+        // Handle navigation click
+        function handleNavClick(e) {
+            e.preventDefault();
+
+            const pageId = this.getAttribute('data-page');
+            const title = this.getAttribute('data-title');
+
+            navigateToPage(pageId, title);
+        }
+
+        // Navigate to page
+        function navigateToPage(pageId, title) {
+            // Update active nav item
+            navItems.forEach(item => {
+                item.classList.remove('active');
+                if (item.getAttribute('data-page') === pageId) {
+                    item.classList.add('active');
+                }
+            });
+
+            // Hide all pages
+            pages.forEach(page => {
+                page.classList.remove('active');
+            });
+
+            // Show selected page
+            document.getElementById(pageId).classList.add('active');
+
+            // Update page title
+            pageTitle.textContent = title;
+        }
+
+        // Toggle dark mode
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            localStorage.setItem('darkMode', darkModeToggle.checked);
+        }
+
+        // Toggle notifications
+        function toggleNotifications() {
+            localStorage.setItem('notificationsEnabled', notificationsToggle.checked);
+
+            if (notificationsToggle.checked) {
+                showToast('Notifications enabled');
+            } else {
+                showToast('Notifications disabled');
+            }
+        }
+
+        // Open edit profile modal
+        function openEditProfileModal() {
+            // Pre-fill form with current profile data
+            nameInput.value = currentUser.name;
+            emailInput.value = currentUser.email;
+
+            editProfileModal.classList.add('active');
+        }
+
+        // Close edit profile modal
+        function closeEditProfileModal() {
+            editProfileModal.classList.remove('active');
+        }
+
+        // Handle profile form submission
+        function handleProfileSubmit(e) {
+            e.preventDefault();
+
+            // Update current user
+            currentUser.name = nameInput.value;
+            currentUser.email = emailInput.value;
+
+            // Update in users array
+            const userIndex = users.findIndex(u => u.id === currentUser.id);
+            if (userIndex !== -1) {
+                users[userIndex] = currentUser;
+                saveUsers();
+            }
+
+            // Save to localStorage
+            localStorage.setItem('loggedInUser', JSON.stringify(currentUser));
+
+            // Update profile display
+            updateProfile();
+
+            // Close modal
+            closeEditProfileModal();
+
+            // Show success toast
+            showToast('Profile updated successfully!');
+        }
+
+        // Handle logout
+        function handleLogout() {
+            // Show loading state
+            logoutBtn.innerHTML = '<div class="spinner"></div>';
+
+            // Simulate logout process
+            setTimeout(() => {
+                currentUser = null;
+                localStorage.removeItem('loggedInUser');
+
+                hideApp();
+                showLogin();
+
+                showToast('Logged out successfully');
+
+                // Reset logout button
+                logoutBtn.innerHTML = `
+                    <i class="material-icons">logout</i>
+                    <div class="profile-action-title">Logout</div>
+                    <div class="feature-desc">Sign out of your account</div>
+                `;
+            }, 1500);
+        }
+
+        // Show toast notification
+        function showToast(message) {
+            toast.textContent = message;
+            toast.classList.add('active');
+
+            setTimeout(() => {
+                toast.classList.remove('active');
+            }, 3000);
+        }
+
+        // Get initials from name
+        function getInitials(name) {
+            return name.split(' ')
+                .map(part => part.charAt(0).toUpperCase())
+                .join('');
+        }
+
+        // Validate email format
+        function validateEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
+
+        // Initialize the app
+        initApp();
+    </script>
+</body>
+</html>
